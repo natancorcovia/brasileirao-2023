@@ -1,0 +1,64 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Team {
+  id        Int      @id @default(autoincrement())
+  apiId     Int?     @unique
+  name      String
+  shortName String?
+  country   String?
+  logo      String?
+  players   Player[]
+  homeMatches Match[] @relation("homeMatches")
+  awayMatches Match[] @relation("awayMatches")
+}
+
+model Player {
+  id          Int         @id @default(autoincrement())
+  apiId       Int?        @unique
+  name        String
+  position    String?
+  number      Int?
+  nationality String?
+  team        Team?       @relation(fields: [teamId], references: [id])
+  teamId      Int?
+  stats       PlayerStat[]
+}
+
+model Match {
+  id         Int      @id @default(autoincrement())
+  apiId      Int?     @unique
+  date       DateTime
+  homeTeam   Team     @relation("homeMatches", fields: [homeTeamId], references: [id])
+  homeTeamId Int
+  awayTeam   Team     @relation("awayMatches", fields: [awayTeamId], references: [id])
+  awayTeamId Int
+  homeScore  Int?
+  awayScore  Int?
+  stats      PlayerStat[]
+}
+
+model PlayerStat {
+  id          Int      @id @default(autoincrement())
+  player      Player   @relation(fields: [playerId], references: [id])
+  playerId    Int
+  match       Match?   @relation(fields: [matchId], references: [id])
+  matchId     Int?
+  minutes     Int?     @default(0)
+  goals       Int?     @default(0)
+  assists     Int?     @default(0)
+  shots       Int?     @default(0)
+  tackles     Int?     @default(0)
+  passes      Int?     @default(0)
+  yellowCards Int?     @default(0)
+  redCards    Int?     @default(0)
+  saves       Int?     @default(0)
+  createdAt   DateTime @default(now())
+}
