@@ -29,7 +29,6 @@ model Player {
   nationality String?
   teamId      Int?
   team        Team?        @relation(fields: [teamId], references: [id])
-  stats       PlayerStat[]
 }
 
 model Match {
@@ -42,23 +41,4 @@ model Match {
   awayScore  Int?
   awayTeam   Team         @relation("awayMatches", fields: [awayTeamId], references: [id])
   homeTeam   Team         @relation("homeMatches", fields: [homeTeamId], references: [id])
-  stats      PlayerStat[]
-}
-
-model PlayerStat {
-  id          Int      @id @default(autoincrement())
-  playerId    Int
-  matchId     Int?
-  minutes     Int?     @default(0)
-  goals       Int?     @default(0)
-  assists     Int?     @default(0)
-  shots       Int?     @default(0)
-  tackles     Int?     @default(0)
-  passes      Int?     @default(0)
-  yellowCards Int?     @default(0)
-  redCards    Int?     @default(0)
-  saves       Int?     @default(0)
-  createdAt   DateTime @default(now())
-  match       Match?   @relation(fields: [matchId], references: [id])
-  player      Player   @relation(fields: [playerId], references: [id])
 }
