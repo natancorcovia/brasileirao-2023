@@ -1,11 +1,12 @@
+import Link from 'next/link';
 import Header from './_components/Header';
+import { Button } from './_components/ui/button';
+import { Card } from './_components/ui/card';
 
 type Team = {
   id: number;
   name: string;
-  shortName?: string;
-  country?: string;
-  logo?: string;
+  logo: string;
 };
 
 export default async function Home() {
@@ -18,20 +19,22 @@ export default async function Home() {
     <div>
       <Header />
       <div className="p-5">
-        <h2 className="mb-4 text-xl font-bold">Estatísticas Campeonato Brasileiro</h2>
+        <h2 className="mb-4 text-xl font-bold">Brazilian Championship Statistics</h2>
         <p className="font-medium">
-          Acompanhe elencos completos e estatísticas da Série A do Campeonato Brasileiro de 2023.
+          Follow complete squads and statistics for the 2023 Brazilian Championship Series A.
         </p>
       </div>
 
       <div className="p-8">
-        <h1 className="mb-6 text-2xl font-bold">Times da Série A</h1>
+        <h1 className="mb-6 text-2xl font-bold">Serie A Teams</h1>
         <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
           {teams.map((team) => (
-            <div key={team.id} className="flex flex-col items-center rounded-xl p-4">
-              {team.logo && <img src={team.logo} alt={team.name} className="mb-2 h-16 w-16" />}
-              <span className="font-semibold">{team.name}</span>
-            </div>
+            <Card key={team.id} className="flex flex-col items-center rounded-xl bg-gray-800 p-4">
+              {team.logo && <img src={team.logo} alt={team.name} className="mb-2 h-18 w-18" />}
+              <Button className="font-semibold" variant="ghost">
+                <Link href="">{team.name}</Link>
+              </Button>
+            </Card>
           ))}
         </div>
       </div>
