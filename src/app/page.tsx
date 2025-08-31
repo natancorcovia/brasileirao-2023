@@ -32,7 +32,7 @@ export default async function Home() {
             <Card key={team.id} className="flex flex-col items-center rounded-xl bg-gray-800 p-4">
               {team.logo && <img src={team.logo} alt={team.name} className="mb-2 h-18 w-18" />}
               <Button className="font-semibold" variant="ghost">
-                <Link href="">{team.name}</Link>
+                <Link href={`/team/${team.id}`}>{team.name}</Link>
               </Button>
             </Card>
           ))}
