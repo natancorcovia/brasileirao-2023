@@ -10,11 +10,7 @@ import {
 } from '@/app/_components/ui/table';
 import Image from 'next/image';
 
-interface TeamPageProps {
-  params: { id: string };
-}
-
-export default async function TeamPage({ params }: TeamPageProps) {
+export default async function TeamPage({ params }: { params: { id: string } }) {
   const { id } = params;
 
   const team = await prisma.team.findUnique({
@@ -51,7 +47,7 @@ export default async function TeamPage({ params }: TeamPageProps) {
             <TableRow>
               <TableHead>Name</TableHead>
               <TableHead>Position</TableHead>
-              <TableHead>Nacionality</TableHead>
+              <TableHead>Nationality</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
