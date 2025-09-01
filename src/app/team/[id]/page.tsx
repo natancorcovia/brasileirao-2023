@@ -1,5 +1,14 @@
 import { prisma } from '@/app/_lib/prisma';
 import { notFound } from 'next/navigation';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/app/_components/ui/table';
+import Image from 'next/image';
 
 interface TeamPageProps {
   params: { id: string };
@@ -20,21 +29,41 @@ export default async function TeamPage({ params }: TeamPageProps) {
   }
 
   return (
-    <div>
-      <h1>{team.name}</h1>
-      <h2 className="mb-2 text-2xl font-semibold">Jogadores:</h2>
+    <div className="mx-auto max-w-6xl p-6">
+      <div className="mb-6 flex items-center">
+        {team.logo && (
+          <Image
+            src={team.logo}
+            alt={`${team.name} logo`}
+            width={60}
+            height={60}
+            className="mr-4"
+          />
+        )}
+        <h1 className="text-4xl font-bold">{team.name}</h1>
+      </div>
+
       {team.players.length === 0 ? (
-        <p>Nenhum jogador cadastrado.</p>
+        <p className="text-muted-foreground">No players registered in the API.</p>
       ) : (
-        <ul className="list-inside list-disc">
-          {team.players.map((player) => (
-            <li key={player.id}>
-              <p className="font-semibold">{player.name}</p>
-              <p>Posição: {player.position}</p>
-              <p>Nacionalidade: {player.nationality}</p>
-            </li>
-          ))}
-        </ul>
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Name</TableHead>
+              <TableHead>Position</TableHead>
+              <TableHead>Nacionality</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {team.players.map((player) => (
+              <TableRow key={player.id}>
+                <TableCell className="font-medium">{player.name}</TableCell>
+                <TableCell>{player.position}</TableCell>
+                <TableCell>{player.nationality}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
       )}
     </div>
   );

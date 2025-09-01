@@ -19,7 +19,7 @@ export default async function Home() {
     <div>
       <Header />
       <div className="p-5">
-        <h2 className="mb-4 text-xl font-bold">Brazilian Championship Statistics</h2>
+        <h2 className="mb-4 text-xl font-bold">Brazilian Championship</h2>
         <p className="font-medium">
           Follow complete squads and statistics for the 2023 Brazilian Championship Series A.
         </p>
