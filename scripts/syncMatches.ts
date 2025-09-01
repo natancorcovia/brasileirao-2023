@@ -18,7 +18,6 @@ async function main() {
   const fixtures = response.data.response;
 
   for (const f of fixtures) {
-    // Buscar os times no banco pelo apiId
     const homeTeam = await prisma.team.findFirst({ where: { apiId: f.teams.home.id } });
     const awayTeam = await prisma.team.findFirst({ where: { apiId: f.teams.away.id } });
 

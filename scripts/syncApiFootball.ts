@@ -29,7 +29,6 @@ async function syncTeams() {
         logo: t.team.logo,
       };
 
-      // Verifica se apiId existe
       if (!teamData.apiId) {
         console.warn(`❌ Pulando time sem apiId: ${t.team.name}`);
         continue;
@@ -37,7 +36,6 @@ async function syncTeams() {
 
       console.log('🔹 Inserindo/atualizando:', teamData);
 
-      // upsert: cria se não existir, atualiza se existir
       await prisma.team.upsert({
         where: { apiId: teamData.apiId },
         create: teamData,
