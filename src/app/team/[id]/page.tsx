@@ -10,19 +10,19 @@ import {
 } from '@/app/_components/ui/table';
 import Image from 'next/image';
 
-export default async function TeamPage({ params }: { params: { id: string } }) {
+interface TeamPageProps {
+  params: { id: string };
+}
+
+export default async function TeamPage({ params }: TeamPageProps) {
   const { id } = params;
 
   const team = await prisma.team.findUnique({
     where: { id: Number(id) },
-    include: {
-      players: true,
-    },
+    include: { players: true },
   });
 
-  if (!team) {
-    return notFound();
-  }
+  if (!team) return notFound();
 
   return (
     <div className="mx-auto max-w-6xl p-6">
